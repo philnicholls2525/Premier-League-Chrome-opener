@@ -22,31 +22,6 @@ button{appearance:none;border:none;border-radius:12px;padding:10px 14px;min-heig
 .progressFill{height:100%;background:linear-gradient(90deg,#22c55e,#38bdf8);width:0%}
 .summaryHit{outline:2px solid rgba(255,255,255,.78)}
 .bookend .serial{background:rgba(250,204,21,.22);outline:1px solid rgba(250,204,21,.55)}
-.revealAuto{box-shadow:0 0 30px rgba(250,204,21,.35),0 16px 28px rgba(0,0,0,.34)!important}
-.revealLow{box-shadow:0 0 28px rgba(250,204,21,.22),0 16px 28px rgba(0,0,0,.34)!important}
-.revealOne{box-shadow:0 0 34px rgba(255,255,255,.32),0 16px 28px rgba(0,0,0,.34)!important}
-.revealCase{box-shadow:0 0 34px rgba(255,255,255,.24),0 16px 28px rgba(0,0,0,.34)!important}
-.stack.suspense{animation:hitshake .38s ease 1}
-.hitBanner{position:absolute;left:10px;right:10px;top:10px;padding:8px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.08em;text-align:center;background:rgba(255,255,255,.16);backdrop-filter:blur(4px);z-index:3}
-.autoBanner{background:rgba(250,204,21,.28)}
-.caseBanner{background:rgba(255,255,255,.18)}
-.parallelBanner{background:rgba(255,255,255,.14)}
-.summaryHit{outline:2px solid rgba(255,255,255,.78);box-shadow:0 0 24px rgba(255,255,255,.14),0 10px 24px rgba(0,0,0,.25)}
-.parallelWash{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.42}
-.purple .parallelWash{background:linear-gradient(135deg, rgba(168,85,247,.55), rgba(168,85,247,.12))}
-.orange .parallelWash{background:linear-gradient(135deg, rgba(249,115,22,.58), rgba(249,115,22,.14))}
-.gold .parallelWash{background:linear-gradient(135deg, rgba(250,204,21,.6), rgba(250,204,21,.16))}
-.red .parallelWash{background:linear-gradient(135deg, rgba(239,68,68,.62), rgba(239,68,68,.16))}
-.black .parallelWash{background:linear-gradient(135deg, rgba(255,255,255,.18), rgba(0,0,0,.36));opacity:.5}
-.caseRed.crown{background:radial-gradient(circle at top, rgba(250,204,21,.16), transparent 24%),linear-gradient(135deg,#2a0606,#5b1010 55%, #180505)}
-.caseRed.lightning{background:radial-gradient(circle at top left, rgba(255,255,255,.12), transparent 24%),linear-gradient(135deg,#2a0606,#571111 55%, #1a0606)}
-.caseRed.theatre{background:radial-gradient(circle at top, rgba(255,255,255,.12), transparent 20%),linear-gradient(180deg,#2a0606,#571111 60%, #1a0606)}
-.caseOne.crown{background:radial-gradient(circle at top, rgba(255,255,255,.18), transparent 22%),linear-gradient(135deg,#caa54a,#f4d77d 52%, #b38728)}
-.caseOne.lightning{background:radial-gradient(circle at top left, rgba(255,255,255,.22), transparent 24%),linear-gradient(135deg,#caa54a,#f4d77d 52%, #b38728)}
-.caseOne.theatre{background:radial-gradient(circle at top, rgba(255,255,255,.22), transparent 22%),linear-gradient(180deg,#caa54a,#f4d77d 60%, #b38728)}
-.caseOne .tt,.caseOne .name,.caseOne .team,.caseOne .serial,.caseOne .value,.caseOne .owned{color:#111827}
-.caseOne .serial,.caseOne .value{background:rgba(0,0,0,.08)}
-@keyframes hitshake{0%{transform:translateX(-50%) rotate(-2deg)}25%{transform:translateX(-50%) rotate(-4deg)}50%{transform:translateX(-50%) rotate(2deg)}75%{transform:translateX(-50%) rotate(-3deg)}100%{transform:translateX(-50%) rotate(-2deg)}}
 .stage{display:flex;justify-content:center;align-items:center;min-height:320px;margin-top:12px;position:relative;overflow:hidden}
 .pack{width:220px;height:300px;border-radius:24px;background:radial-gradient(circle at 25% 18%, rgba(255,255,255,.24), transparent 28%),linear-gradient(135deg,#1d4ed8,#0ea5e9 45%, #0f172a 100%);box-shadow:0 18px 38px rgba(0,0,0,.34);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:16px;cursor:pointer}
 .packTitle{font-size:28px;font-weight:900;line-height:1}.packSub{margin-top:10px;font-size:13px;color:#dbeafe}
@@ -210,20 +185,6 @@ function hitScore(card){
   if(card.variant==="Purple /50") return 40;
   if(card.set!=="Base Set") return 60;
   return 0;
-
-function isBigHit(card){
-  return card.set==="Autographs" || ["Crown Jewels","Midnight Lightning","Theatre of Greatness"].includes(card.set) || ["Gold /10","Red /5","Black 1/1"].includes(card.variant);
-}
-function bannerText(card){
-  if(card.set==="Autographs") return "AUTOGRAPH HIT";
-  if(card.set==="Crown Jewels") return "CROWN JEWELS";
-  if(card.set==="Midnight Lightning") return "MIDNIGHT LIGHTNING";
-  if(card.set==="Theatre of Greatness") return "THEATRE OF GREATNESS";
-  if(card.variant==="Black 1/1") return "ONE OF ONE";
-  if(card.variant==="Red /5") return "RED /5 HIT";
-  if(card.variant==="Gold /10") return "GOLD /10 HIT";
-  return "";
-}
 }
 function applyParallel(card, forced){
   card.variant = forced || weightedParallel();
@@ -298,8 +259,6 @@ function cls(card){
   if(card.variant==="Gold /10") out += "gold ";
   if(card.variant==="Red /5") out += "red ";
   if(card.variant==="Black 1/1") out += "black ";
-  if(["Crown Jewels","Midnight Lightning","Theatre of Greatness"].includes(card.set) && card.variant==="Red /5") out += " caseRed ";
-  if(["Crown Jewels","Midnight Lightning","Theatre of Greatness"].includes(card.set) && card.variant==="Black 1/1") out += " caseOne ";
   return out;
 }
 function serialText(card){ if(card.serial) return card.serial; if(card.variant==="Black 1/1") return "1/1"; if(card.variant) return card.variant; return card.checklist; }
@@ -355,7 +314,6 @@ function renderStage(){
     if(current){
       const currentCard=document.createElement("div");
       currentCard.className="stack";
-      if(current._teasing) currentCard.classList.add("suspense");
       currentCard.style.left="50%";
       currentCard.style.top="0px";
       currentCard.style.transform="translateX(-50%) rotate(-2deg)";
@@ -371,12 +329,6 @@ function renderStage(){
         currentCard.appendChild(f);
       }
       currentCard.style.pointerEvents = "auto";
-        if(current._revealed){
-          if(current.set==="Autographs") currentCard.classList.add("revealAuto");
-          if(current.variant==="Gold /10" || current.variant==="Orange /25" || current.variant==="Purple /50") currentCard.classList.add("revealLow");
-          if(current.variant==="Black 1/1") currentCard.classList.add("revealOne");
-          if(["Crown Jewels","Midnight Lightning","Theatre of Greatness"].includes(current.set)) currentCard.classList.add("revealCase");
-        }
         currentCard.onclick = revealNext;
       hand.appendChild(currentCard);
     }
@@ -427,8 +379,7 @@ function showPackSummary(cards){
   grid.innerHTML = "";
   const sorted = cards.slice().sort((a,b)=>hitScore(b)-hitScore(a));
   sorted.forEach(card => {
-    const shown = Object.assign({}, card, {_showBanner:hitScore(card)>0});
-    const el = renderCard(shown,false,own(card));
+    const el = renderCard(card,false,own(card));
     if(hitScore(card) > 0) el.classList.add("summaryHit");
     grid.appendChild(el);
   });
@@ -438,23 +389,7 @@ function showPackSummary(cards){
 function revealNext(){
   if(state.handIndex >= state.hand.length) return;
   const current = state.hand[state.handIndex];
-  if(current._teasing) return;
   if(!current._revealed){
-    if(isBigHit(current)){
-      current._teasing = true;
-      setMsg(`${bannerText(current)}...`);
-      renderAll();
-      save();
-      setTimeout(()=>{
-        current._teasing = false;
-        addCard(current);
-        current._revealed = true;
-        setMsg("Tap the revealed card again to move it away.");
-        renderAll();
-        save();
-      }, (current.variant==="Black 1/1" || ["Crown Jewels","Midnight Lightning","Theatre of Greatness"].includes(current.set)) ? 650 : 380);
-      return;
-    }
     addCard(current);
     current._revealed = true;
     setMsg("Tap the revealed card again to move it away.");
